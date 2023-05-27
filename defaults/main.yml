@@ -1,0 +1,9 @@
+---
+
+journald_debug: false
+
+journald_service_ensure: started
+
+journald_service_enable: true
+
+journald_config_options: {} 

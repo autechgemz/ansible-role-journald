@@ -1,0 +1,13 @@
+---
+- name: Service tasks
+  tags:
+    - journald_service
+    - journald
+  become: true
+  block:
+    - name: Manage journald service
+      ansible.builtin.service:
+        name: "{{ journald_service_name }}"
+        state: "{{ journald_service_ensure }}"
+        enabled: "{{ journald_service_enable }}"
+      when: not ansible_check_mode

@@ -1,0 +1,13 @@
+---
+- name: Debug config tasks
+  when: journald_debug is defined and journald_debug
+  block:
+    - name: Print journald_config_options
+      ansible.builtin.debug:
+        var: journald_config_options
+    - name: Print journald_config_default
+      ansible.builtin.debug:
+        var: journald_config_default
+    - name: Print journald_config_merged
+      ansible.builtin.debug:
+        var: journald_config_merged

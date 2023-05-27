@@ -1,0 +1,33 @@
+---
+- name: Config tasks
+  tags:
+    - journald_config
+    - journald
+  become: true
+  block:
+    - name: Merge configration
+      ansible.builtin.set_fact:
+        journald_config_merged: "{{ journald_config_default | ansible.builtin.combine(journald_config_options, recursive=True) }}"
+
+    - name: Debug variables
+      ansible.builtin.include_tasks: debug/config.yml
+      when: journald_debug is defined and journald_debug
+
+    - name: Create persistent directory
+      ansible.builtin.file:
+        path: "{{ journald_persistent_dir }}"
+        force: yes
+        owner: root
+        group: systemd-journal
+        mode: 02755
+        state: directory
+      notify: Restart journald
+
+    - name: Generate journald configration
+      ansible.builtin.template:
+        src: journald.conf.j2
+        dest: "{{ journald_config_file }}"
+        owner: root
+        group: root
+        mode: 0644
+      notify: Restart journald

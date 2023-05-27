@@ -1,0 +1,20 @@
+---
+- name: Main tasks
+  tags:
+    - journald_config
+    - journald_service
+    - journald
+  block:
+    - name: Load dependency variables
+      ansible.builtin.include_vars: "{{ item }}"
+      loop:
+        - "{{ ansible_os_family }}.yml"
+    - name: Configration tasks
+      ansible.builtin.import_tasks: config.yml
+    - name: Configration tasks
+      ansible.builtin.import_tasks: service.yml
+  rescue:
+    - name: Print Error
+      ansible.builtin.debug:
+        msg: "Unsupport platform or error occurred due to some reason."
+      failed_when: true

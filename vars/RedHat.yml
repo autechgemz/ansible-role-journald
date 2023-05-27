@@ -1,0 +1,9 @@
+---
+
+journald_service_name: systemd-journald
+
+journald_config_file: '/etc/systemd/journald.conf'
+
+journald_persistent_dir: '/var/log/journal'
+
+journald_config_default: {}

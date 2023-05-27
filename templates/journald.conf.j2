@@ -1,0 +1,12 @@
+# {{ ansible_managed }}
+
+[Journal]
+{% if journald_config_merged is defined and journald_config_merged %}
+{% for key, value in journald_config_merged.items() %}
+{% if value %}
+{{ key }}={{ value }}
+{% else %}
+{{ key }}=
+{% endif %}
+{% endfor %}
+{% endif %}
